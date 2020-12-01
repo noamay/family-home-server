@@ -1,0 +1,193 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+  # Customization file
+  customize: !include customize.yaml
+  auth_mfa_modules:
+    - type: totp
+lovelace:
+  mode: yaml
+# Configure a default setup of Home Assistant (frontend, api, etc)
+zone: !include zones.yaml
+default_config:
+speedtestdotnet:
+updater:
+config:
+scene: !include scenes.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+switcher_kis:
+    phone_id: !secret switcher_phone_id
+    device_id: !secret switcher_device_id
+    device_password: !secret switcher_device_pass
+    
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api
+    mode: daily
+    
+timer:
+    boiler:
+        duration: '00:45:00'
+        name: "Boiler"
+        icon: mdi:water-boiler
+    
+input_select:
+  attic_scenes:
+    name: Scenes
+    options:
+      - Study
+      - Movie
+      - Chillout
+      - Off
+    initial: Study
+    icon: mdi:lightbulb-on-outline
+    
+vacuum:
+  - platform: roomba
+    host: !secret irobot_ip
+    username: !secret irobot_blid
+    password: !secret irobot_password
+
+mqtt:
+    discovery: true
+    broker: 127.0.0.1  # Remove if you want to use builtin-in MQTT broker
+    username: !secret mqtt_user
+    password: !secret mqtt_pass
+    birth_message:
+        topic: 'hass/status'
+        payload: 'online'
+    will_message:
+        topic: 'hass/status'
+        payload: 'offline'
+
+cloud: !include cloud.yaml
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  ssl_certificate: /config/certificate/fullchain.pem
+  ssl_key: /config/certificate/privkey.pem
+  base_url: !secret external_url
+# Discover some devices automatically
+discovery:
+  ignore:
+   - yeelight
+   
+yeelight:
+  devices:
+    !secret light_strip_ip:
+      name: Sofa Lightstrip
+
+switch: !include switches.yaml
+
+light: !include light.yaml
+
+cover: !include covers.yaml
+
+
+    
+input_boolean:
+  warm_wakeup:
+    name: Warm Wakeup
+    initial: off
+    icon: mdi:radiator
+  alarm_enabled:
+    name: Activate Alarm
+    initial: off
+    icon: mdi:alarm
+  attic_climate:
+    name: Climate
+    initial: off
+    icon: mdi:air-conditioner
+  noam_sleeping:
+    name: Sleep
+    initial: off
+    icon: mdi:hotel
+  plex:
+    name: Plex Attic
+    initial: off
+  basement_light:
+    name: Basement Light
+
+input_number:
+
+  alarm_hour:
+    name: Alarm Hour
+    icon: mdi:timer
+    initial: 9
+    min: 0
+    max: 23
+    step: 1
+  alarm_minute:
+    name: Alarm Minute
+    icon: mdi:timer
+    initial: 0
+    min: 0
+    max: 59
+    step: 5
+    
+input_datetime:
+    alarm_time:
+        name: Alarm Time
+        has_date: false
+        has_time: true
+        initial: '07:30:00'
+        
+# Sensors
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+      
+tuya:
+  username: !secret tuya_user
+  password: !secret tuya_pass
+  country_code: 972
+  
+feedreader:
+  urls:
+    - http://www.ynet.co.il/Integration/StoryRss2.xml
+
+climate:
+  - platform: smartir
+    name: Noam AC
+    unique_id: noam_ac
+    device_code: 1340
+    controller_data: !secret broadlink_rm2_ip
+    temperature_sensor: sensor.0x00158d0001b790ee_temperature
+    humidity_sensor: sensor.0x00158d0001b790ee_humidity
+    power_sensor: binary_sensor.noam_bedroom_ac
+    
+  - platform: smartir
+    name: Attic AC
+    unique_id: attic_ac
+    device_code: 1380
+    controller_data: !secret broadlink_attic_ip
+    temperature_sensor: sensor.noam_a1_temperature
+    humidity_sensor: sensor.noam_a1_humidity
+    power_sensor: binary_sensor.attic_ac
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_bot_api
+    parse_mode: html
+    allowed_chat_ids:
+      - !secret telegram_chatid_noam
+      - !secret telegram_chatid_group
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
