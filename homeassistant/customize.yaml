@@ -1,0 +1,30 @@
+    light.out_grdn1:
+        friendly_name: Garden 1
+    light.out_grdn2:
+        friendly_name: Garden 2
+    light.out_grdn3:
+        friendly_name: Garden 3
+    light.out_grdn4:
+        friendly_name: Garden 4
+    light.out_entrance:
+        friendly_name: Front Door
+    light.out_balcony:
+        friendly_name: Balcony
+    light.hall_basement:
+        friendly_name: Basement
+    light.hall_aqua:
+        friendly_name: Aquarium
+    light.lr_living1:
+        friendly_name: Living Room
+    light.lr_living2:
+        friendly_name: TV Area
+    light.noam_bar:
+        friendly_name: Bar
+    group.all_automations:
+        hidden: false
+    group.all_scripts:
+        hidden: false
+    group.dummy_switches:
+        hidden: true
+    person.noam_aybes:
+        entity_picture: "/local/Persons/Noam.jpg"

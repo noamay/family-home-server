@@ -1,0 +1,178 @@
+  google_actions:
+    filter:
+      include_entities:
+        - switch.noam_tv
+        - switch.noam_aircon
+        - switch.noam_heater
+        - switch.noam_fan
+        - input_boolean.warm_wakeup
+        - light.noam_bar
+        - switch.noam_hdmi1
+        - switch.noam_hdmi2
+        - light.hall_basement
+        - light.hall_aqua
+        - light.out_grdn1
+        - light.out_grdn2
+        - light.out_grdn3
+        - light.out_grdn4
+        - light.out_balcony
+        - light.out_entrance
+        - light.lr_living1
+        - light.lr_living2
+        - switch.lr_cover
+        - input_boolean.attic_climate
+        - cover.noam_blinds
+        - input_boolean.alarm_enabled
+        - cover.lr_blinds
+        - script.morning
+        - script.lightson
+        - script.lightsoff
+        - script.dream
+        - switch.attic_tv
+        - switch.attic_aircon
+        - switch.attic_fan
+        - switch.attic_heater
+        - switch.study_aircon
+        - switch.study_fan
+        - switch.study_heater
+        - light.bed
+        - light.work_space
+        - light.computer
+        - light.bed_top_1
+        - light.bed_light_strip
+        - light.bed_top_3
+        - light.bed_top_4
+        - light.work_top_1
+        - light.work_top_2
+        - light.work_top_3
+        - light.work_top_4
+        - light.bath_1
+        - light.bath_2
+        - script.tupac
+        - script.biggie
+        - script.morning
+        - script.leave_bedroom
+        - script.shower_time
+        - light.attic_entrance
+        - light.attic_armchair
+        - light.attic_couch
+        - climate.noam_ac
+        - light.sofa_lightstrip
+        - script.attic_study
+        - script.attic_chillout
+        - script.attic_movie
+        - media_player.samsung_7_series_50_ue50mu7003
+        - input_boolean.noam_sleeping
+        
+    entity_config:
+        light.bed_top_1:
+            room: Noam's Bedroom
+        light.bed_light_strip:
+            room: Noam's Bedroom
+        light.bed_top_3:
+            room: Noam's Bedroom
+        light.bed_top_4:
+            room: Noam's Bedroom
+        light.work_top_1:
+            room: Noam's Bedroom
+        light.work_top_2:
+            room: Noam's Bedroom
+        light.work_top_3:
+            room: Noam's Bedroom
+        light.work_top_4:
+            room: Noam's Bedroom
+        light.bed:
+            room: Noam's Bedroom
+        light.work_space:
+            room: Noam's Bedroom
+        light.computer:
+            room: Noam's Bedroom
+        switch.noam_tv:
+            room: Noam's Bedroom
+        switch.noam_aircon:
+            room: Noam's Bedroom
+        switch.noam_heater:
+            room: Noam's Bedroom
+        switch.noam_fan:
+            room: Noam's Bedroom
+        switch.noam_hdmi1:
+            name: HOT
+            room: Noam's Bedroom
+        switch.noam_hdmi2:
+            name: Streamer
+            room: Noam's Bedroom
+        light.noam_bar:
+            room: Noam's Bedroom
+        light.out_grdn1:
+            room: Back Yard
+        light.out_grdn2:
+            room: Back Yard
+        light.out_grdn3:
+            room: Back Yard
+        light.out_grdn4:
+            room: Back Yard
+        light.out_balcony:
+            room: Front Yard
+        light.out_entrance:
+            room: Front Yard
+        light.lr_living1:
+            room: Living Room
+        light.lr_living2:
+            room: Living Room
+        cover.lr_blinds:
+            room: Living Room
+        light.hall_basement:
+            room: Basement
+        light.hall_aqua:
+            room: Hall
+        switch.attic_tv:
+            room: Attic
+        input_boolean.attic_climate:
+            room: Attic
+        switch.attic_aircon:
+            room: Attic
+        switch.attic_fan:
+            room: Attic
+        switch.attic_heater:
+            room: Attic
+        #switch.guest_aircon:
+        #    room: Attic Bedroom
+        #switch.guest_fan:
+        #    room: Attic Bedroom
+        #switch.guest_heater:
+        #    room: Attic Bedroom
+        switch.study_aircon:
+            room: Study
+        switch.study_fan:
+            room: Study
+        switch.study_heater:
+            room: Study
+        light.bath_1:
+            room: Bedroom Bath
+        light.bath_2:
+            room: Bedroom Bath
+        media_player.samsung_7_series_50_ue50mu7003:
+            room: Bedroom Bath
+        input_boolean.alarm_enabled:
+            name: Alarm Clock
+            room: Noam's Bedroom
+        input_boolean.warm_wakeup:
+            name: Warm Wakeup
+            room: Noam's Bedroom
+        climate.noam_ac:
+            name: AirCon
+            room: Noam's Bedroom
+        light.attic_entrance:
+            room: Attic
+        light.attic_armchair:
+            room: Attic
+        light.attic_couch:
+            room: Attic
+        light.sofa_lightstrip:
+            room: Attic
+        script.attic_chillout:
+            name: Chillout scene
+        script.attic_study:
+            name: Study scene
+        script.attic_movie:
+            name: Movie scene

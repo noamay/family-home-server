@@ -1,0 +1,171 @@
+- id: '1579126992252'
+  name: Chillout
+  entities:
+    light.attic_armchair:
+      brightness: 255
+      color:
+        x: 0.137
+        y: 0.065
+      friendly_name: Armchair
+      hs_color:
+      - 224.64
+      - 98.039
+      rgb_color:
+      - 5
+      - 69
+      - 255
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.138
+      - 0.07
+    light.attic_couch:
+      brightness: 255
+      color:
+        x: 0.527
+        y: 0.447
+      friendly_name: Couch
+      hs_color:
+      - 44.941
+      - 100
+      rgb_color:
+      - 255
+      - 190
+      - 0
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.528
+      - 0.446
+    light.attic_entrance:
+      brightness: 255
+      color:
+        x: 0.491
+        y: 0.39
+      friendly_name: Entrance
+      hs_color:
+      - 30.207
+      - 56.863
+      rgb_color:
+      - 255
+      - 182
+      - 109
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.491
+      - 0.39
+- id: '1579127165070'
+  name: Study
+  entities:
+    light.attic_armchair:
+      brightness: 255
+      color:
+        x: 0.385
+        y: 0.384
+      friendly_name: Armchair
+      hs_color:
+      - 44.384
+      - 28.627
+      rgb_color:
+      - 255
+      - 236
+      - 182
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.385
+      - 0.384
+    light.attic_couch:
+      brightness: 255
+      color:
+        x: 0.36
+        y: 0.316
+      friendly_name: Couch
+      hs_color:
+      - 345.789
+      - 14.902
+      rgb_color:
+      - 255
+      - 216
+      - 226
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.361
+      - 0.315
+    light.attic_entrance:
+      brightness: 255
+      color:
+        x: 0.443
+        y: 0.379
+      friendly_name: Entrance
+      hs_color:
+      - 30
+      - 43.137
+      rgb_color:
+      - 255
+      - 200
+      - 145
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.443
+      - 0.379
+- id: '1579127328527'
+  name: Movie
+  entities:
+    light.attic_armchair:
+      brightness: 89
+      color:
+        x: 0.137
+        y: 0.065
+      friendly_name: Armchair
+      hs_color:
+      - 224.64
+      - 98.039
+      rgb_color:
+      - 5
+      - 69
+      - 255
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.138
+      - 0.07
+    light.attic_couch:
+      brightness: 54
+      color:
+        x: 0.677
+        y: 0.319
+      friendly_name: Couch
+      hs_color:
+      - 15.178
+      - 99.216
+      rgb_color:
+      - 255
+      - 65
+      - 1
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.675
+      - 0.32
+    light.attic_entrance:
+      brightness: 255
+      color:
+        x: 0.677
+        y: 0.319
+      friendly_name: Entrance
+      hs_color:
+      - 15.178
+      - 99.216
+      rgb_color:
+      - 255
+      - 65
+      - 1
+      state: 'on'
+      supported_features: 57
+      xy_color:
+      - 0.675
+      - 0.32

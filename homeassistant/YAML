@@ -1,0 +1,98 @@
+type: 'custom:stack-in-card'
+mode: horizontal
+cards:
+  - type: 'custom:stack-in-card'
+    title: Light
+    mode: vertical
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.attic_armchair
+            icon: 'mdi:seat'
+          - type: light
+            entity: light.attic_couch
+            name: Wall
+            icon: 'mdi:wall'
+          - type: light
+            entity: light.sofa_lightstrip
+            name: Sofa
+            icon: 'mdi:sofa'
+      - type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.attic_entrance
+            icon: 'mdi:door'
+          - type: light
+            entity: light.attic_bed_window
+            icon: 'mdi:window-closed'
+          - type: light
+            entity: light.attic_bed_top
+            name: Bed Top
+            icon: 'mdi:bed'
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - input_select.attic_scenes
+          - type: button
+            name: Reload Scene
+            icon: 'mdi:thumb-up-outline'
+            icon_height: 5rem
+            tap_action:
+              action: call-service
+              service: input_select.reload
+              service_data:
+                entity_id: input_select.attic_scenes
+      - type: horizontal-stack
+        cards:
+          - type: media-control
+            entity: media_player.attic_speaker
+  - type: 'custom:stack-in-card'
+    title: Light
+    mode: vertical
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:simple-thermostat'
+            entity: climate.attic_ac
+          - type: weather-forecast
+            entity: weather.dark_sky
+      - type: horizontal-stack
+        cards:
+          - type: button
+            entity: switch.attic_tv
+            show_name: false
+            icon: mdi:television
+          - type: button
+            entity: switch.attic_tv_mute
+            show_name: false
+            icon: mdi:volume-mute
+          - type: button
+            entity: script.shower_time
+      - type: horizontal-stack
+        cards:
+          - type: 
+      - type: horizontal-stack
+        cards:
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.speedtest_download
+              line_color: blue
+              line_width: 8
+              font_size: 75
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.speedtest_upload
+              line_color: '#e74c3c'
+              line_width: 8
+              font_size: 75
+            - type: custom:mini-graph-card
+              entities:
+                - sensor.speedtest_ping
+              line_color: var(--accent-color)
+              line_width: 8
+              font_size: 75
+            - type: sensor
+              entity: sensor.plex
+

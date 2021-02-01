@@ -1,0 +1,375 @@
+title: Home
+background: var(--background-image)
+resources:
+  - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+    type: module
+  - url: /hacsfiles/upcoming-media-card/upcoming-media-card.js?v=0.1.1
+    type: js
+  - url: /hacsfiles/light-entity-card/light-entity-card.js
+    type: js
+  - url: /hacsfiles/button-card/button-card.js
+    type: module
+  - url: /hacsfiles/simple-thermostat/simple-thermostat.js
+    type: module
+  - url: /hacsfiles/stack-in-card/stack-in-card.js
+    type: module
+  - url: /hacsfiles/generic-remote-control-card/generic-remote-control-card.js
+    type: module
+  - url: /hacsfiles/weather-card/weather-card.js
+    type: module
+  - url: /hacsfiles/surveillance-card/surveillance-card.js #?v=0
+    type: module
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: button
+        icon: mdi:cellphone
+        name: Mobile Version
+        tap_action:
+            action: navigate
+            navigation_path: /home-main/default_view
+      - type: button
+        icon: mdi:laptop
+        name: Desktop Version
+        tap_action:
+            action: navigate
+            navigation_path: /lovelace/Overview
+      - type: button
+        icon: mdi:tablet
+        name: Desktop Version
+        tap_action:
+            action: navigate
+            navigation_path: /lovelace-home/attic
+            
+  - path: Overview
+    title: Overview
+    badges:
+      - entity: binary_sensor.updater
+      - entity: device_tracker.noam_aybess_iphone_2
+    cards:
+      - type: entities
+        entities:
+          - switch.noam_tv
+          - switch.noam_aircon
+          - switch.noam_heater
+          - group.noam_lights
+          - light.hall_basement
+          - switch.noam_fan
+          - group.noam_hdmi
+          - cover.noam_blinds
+          - group.power_sockets
+          - input_boolean.warm_wakeup
+        title: Noam's Bedroom
+        show_header_toggle: true
+      - type: media-control
+        entity: media_player.noam_s_bedroom_display
+      - type: entities
+        entities:
+          - light.bed
+          - light.computer
+          - light.work_space
+          - light.bed_top_1
+          - light.bed_top_3
+          - light.bed_top_4
+          - light.work_top_1
+          - light.work_top_2
+          - light.work_top_3
+          - light.work_top_4
+          - light.bed_light_strip
+        title: Bedroom Lights
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - switch.noam_hdmi1
+          - switch.noam_hdmi2
+          - switch.noam_hdmi3
+        title: HDMI Switch
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - switch.slot_1
+          - switch.slot_2
+          - switch.slot_3
+          - switch.lamp
+        title: Power Sockets
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.out_grdn1
+          - light.out_grdn2
+          - light.out_grdn3
+          - light.out_grdn4
+          - light.out_entrance
+          - light.out_balcony
+        title: Outdoor
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.hall_basement
+          - light.hall_aqua
+          - switch.switcher_aybes
+          - script.shower_time
+          - timer.boiler
+        title: Halls
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
+        title: Speed Test
+        show_header_toggle: true
+    icon: 'mdi:home'
+  - path: noam_view
+    title: Noam's Bedroom
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - light.bed
+          - light.computer
+          - light.work_space
+          - light.bed_top_1
+          - light.bed_top_3
+          - light.bed_top_4
+          - light.work_top_1
+          - light.work_top_2
+          - light.work_top_3
+          - light.work_top_4
+          - light.bed_light_strip
+        title: Bedroom Lights
+        show_header_toggle: true
+      - type: entities
+        entities:
+            - climate.noam_ac
+        title: Climate
+      - type: entities
+        entities:
+          - switch.noam_hdmi1
+          - switch.noam_hdmi2
+          - switch.noam_hdmi3
+        title: HDMI Switch
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - switch.slot_1
+          - switch.slot_2
+          - switch.slot_3
+          - switch.lamp
+        title: Power Sockets
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - input_datetime.alarm_time
+          - input_boolean.alarm_enabled
+        title: Alarm Clock
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - cover.noam_blinds
+        title: Cover
+      - type: entities
+        entities:
+          - input_boolean.warm_wakeup
+        title: Input boolean
+      - type: entities
+        entities:
+          - light.hall_basement
+        title: Light
+      - type: media-control
+        entity: media_player.noam_s_bedroom_display
+      - type: entities
+        entities:
+          - switch.noam_tv
+          - switch.noam_aircon
+          - switch.noam_heater
+          - switch.noam_fan
+        title: Switch
+    icon: 'mdi:hotel'
+  - path: out_view
+    title: Outdoor
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - light.out_grdn1
+          - light.out_grdn2
+          - light.out_grdn3
+          - light.out_grdn4
+          - light.out_entrance
+          - light.out_balcony
+        title: Light
+    icon: 'mdi:pine-tree'
+  - path: living_view
+    title: Living Room
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - cover.lr_blinds
+        title: Cover
+      - type: entities
+        entities:
+          - light.lr_living1
+          - light.lr_living2
+        title: Light
+    icon: 'mdi:television'
+  - path: hall_view
+    title: Halls
+    badges:
+      - entity: timer.boiler
+    cards:
+      - type: entities
+        entities:
+          - sensor.mfc_9330cdw_b_w_counter
+          - sensor.mfc_9330cdw_belt_unit_remaining_life
+          - sensor.mfc_9330cdw_black_toner_remaining
+          - sensor.mfc_9330cdw_color_counter
+          - sensor.mfc_9330cdw_cyan_toner_remaining
+          - sensor.mfc_9330cdw_fuser_remaining_life
+          - sensor.mfc_9330cdw_magenta_toner_remaining
+          - sensor.mfc_9330cdw_page_counter
+          - sensor.mfc_9330cdw_pf_kit_1_remaining_life
+          - sensor.mfc_9330cdw_status
+          - sensor.mfc_9330cdw_uptime
+          - sensor.mfc_9330cdw_yellow_toner_remaining
+        title: Brother Printer
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.hall_basement
+          - light.hall_aqua
+        title: Light
+      - type: entities
+        entities:
+          - script.shower_time
+        title: Script
+      - type: entities
+        entities:
+          - switch.switcher_aybes
+        title: Switch
+      - type: entities
+        entities:
+          - vacuum.roomba
+        title: R2-D2
+    icon: 'mdi:floor-plan'
+  - path: attic_view
+    title: Attic
+    badges: []
+    cards:
+          - type: vertical-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Humidity
+                entities:
+                  - sensor.noam_a1_humidity
+                line_color: blue
+                line_width: 8
+                font_size: 75
+                icon: mdi:water-percent
+              - type: custom:mini-graph-card
+                name: Light
+                entities:
+                  - sensor.noam_a1_light
+                line_color: '#e74c3c'
+                line_width: 8
+                font_size: 75
+                icon: mdi:lightbulb
+              - type: custom:mini-graph-card
+                name: Temperature
+                entities:
+                  - sensor.noam_a1_temperature
+                line_color: var(--accent-color)
+                line_width: 8
+                font_size: 75
+          - type: vertical-stack
+            cards:
+              #- type: entities
+              #  entities:
+              #    - light.attic_entrance
+              #    - light.attic_armchair
+              #    - light.attic_couch
+              #    - light.attic_bed_top
+              #    - light.attic_bed_window
+              #  title: Attic Lights
+              #  show_header_toggle: true
+              - type: custom:light-entity-card
+                entity: group.attic_lights
+                group: true
+              - type: entities
+                entities:
+                  - input_select.attic_scenes
+                title: Scene
+          - type: vertical-stack
+            cards:
+              - type: media-control
+                entity: media_player.attic_speaker
+              - type: entities
+                entities:
+                  - switch.attic_aircon
+                  - switch.attic_heater
+                  - switch.attic_fan
+                  - input_boolean.attic_climate
+                  - switch.attic_tv
+                  - switch.attic_tv_volume
+                  - switch.attic_tv_mute
+                  - switch.attic_tv_av
+                title: Controls
+    icon: 'mdi:sofa'
+  - path: study_view
+    title: Study
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - switch.study_aircon
+          - switch.study_fan
+          - switch.study_heater
+        title: Switch
+    icon: 'mdi:desk'
+    
+  - path: attic_tablet
+    title: Attic Tablet
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - climate.attic_ac
+    icon: 'mdi:sofa'
+  - path: server
+    title: Server Status
+    badges: []
+    cards:
+      - type: entities
+        entities:
+            - sensor.glances_swap_used
+            - sensor.glances_containers_active
+            - sensor.glances_ram_used
+            - sensor.glances_containers_ram_used
+            - sensor.glances_disk_used
+            - sensor.glances_containers_cpu_used
+            - sensor.glances_ram_used_percent
+            - sensor.glances_disk_used_percent
+            - sensor.glances_cpu_load
+            - sensor.glances_swap_used_percent
+            - sensor.glances_running
+            - sensor.glances_cpu_used
+            - sensor.glances_swap_free
+            - sensor.glances_total
+            - sensor.glances_cpu_temp
+            - sensor.glances_ram_free
+            - sensor.glances_thread
+            - sensor.glances_sleeping
+            - sensor.glances_disk_free
+            - sensor.speedtest_download
+            - sensor.speedtest_upload
+            - sensor.speedtest_ping
+            - sensor.plex
+      - type: history-graph
+        entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
+        hours_to_show: 80
+    icon: 'mdi:server'

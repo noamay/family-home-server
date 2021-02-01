@@ -1,0 +1,12 @@
+
+  - name: Work
+    latitude: !secret work_latitude
+    longitude: !secret work_longitude
+    radius: 100
+    icon: mdi:briefcase
+
+  - name: Edens
+    latitude: !secret eden_latitude
+    longitude: !secret eden_longitude
+    radius: 100
+    icon: mdi:home-heart

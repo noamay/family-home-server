@@ -1,0 +1,345 @@
+  alarm_clock:
+    sequence:
+      # This is Home Assistant Script Syntax
+      - service: script.turn_on
+        data:
+            entity_id: script.morning
+      - service: input_boolean.turn_off
+        data:
+            entity_id: input_boolean.alarm_enabled
+  biggie:
+    sequence:
+          - service: switch.turn_on
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_on
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_on
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_on
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_on
+            entity_id: switch.attic_tv_volume
+            
+  tupac:
+    sequence:
+          - service: switch.turn_off
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_off
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_off
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_off
+            entity_id: switch.attic_tv_volume
+          - service: switch.turn_off
+            entity_id: switch.attic_tv_volume
+            
+  # Default Lights structure with validation
+  lightson:
+    alias: Lights On
+    sequence:
+      - alias: Ceiling lights on
+        service: light.turn_on
+        data:
+          entity_id: group.noam_ceiling
+          brightness: 255
+      - alias: Color lights on
+        service: light.turn_on
+        data:
+          entity_id: group.noam_color
+          brightness: 255
+          kelvin: 6410
+      - delay:
+          seconds: 10
+      - alias: Ceiling lights on again
+        service: light.turn_on
+        data:
+          entity_id: group.noam_ceiling
+          brightness: 255
+          
+      - alias: Color lights on again
+        service: light.turn_on
+        data:
+          entity_id: group.noam_color
+          brightness: 255
+          kelvin: 6410
+      - alias: Bar on
+        service: light.turn_on
+        data:
+            entity_id: light.bed_light_strip
+
+  morning:
+    alias: Morning Scene
+    sequence:
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            rgb_color: [240, 140, 55]
+            brightness_pct: 20
+            
+            
+      - delay:
+            minutes: 2
+                
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 20
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            rgb_color: [243, 164, 95]
+            brightness_pct: 40
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 30
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            rgb_color: [246, 186, 135]
+            brightness_pct: 60
+            
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 40
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            rgb_color: [249, 208, 175]
+            brightness_pct: 80
+
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 50
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            rgb_color: [252, 230, 215]
+            brightness_pct: 100
+
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 60
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [255, 255, 255]
+
+      - delay:
+            minutes: 4
+      - service: script.turn_on
+        entity_id: script.lightson
+        
+      - service: cover.open_cover
+        entity_id: cover.noam_blinds
+        
+      - delay:
+            minutes: 10
+      - service: tts.google_say
+        entity_id: media_player.noams_bedroom_display
+        data:
+            message: 'It has been 20 minutes since your alarm went off, get the fuck up!'
+        
+  lightsoff:
+    alias: Lights Off
+    sequence:
+      - service: light.turn_off
+        entity_id: group.noam_ceiling
+      - service: light.turn_off
+        entity_id: group.noam_color
+      - service: light.turn_off
+        entity_id: light.bed_light_strip
+      - delay:
+            seconds: 2
+      - service: light.turn_off
+        entity_id: group.noam_ceiling
+      - service: light.turn_off
+        entity_id: group.noam_color
+
+#  goodnight:
+#    alias: Good Night
+#    sequence:
+#      - service: script.turn_on
+#        entity_id: script.lightsoff
+  dream:
+        alias: "Day Dream Mode"
+        sequence:
+          - service: script.turn_on
+            entity_id: script.lightsoff
+            
+          - delay:
+                seconds: 10
+            
+          - service: light.turn_on
+            data:
+                entity_id: group.noam_color
+                brightness_pct: 100
+                effect: colorloop
+                
+            
+  leave_bedroom:
+        alias: "Leaving Noam's Bedroom"
+        sequence:
+          - service: script.turn_on
+            entity_id: script.dream
+          - service: switch.turn_off
+            entity_id: switch.noam_fan
+          - service: cover.close_cover
+            entity_id: cover.noam_blinds
+            
+  shower_time:
+        alias: "Shower Time" #Turns on boiler for 45 mins
+        sequence:
+          - service: timer.start
+            entity_id: timer.boiler
+            
+  heading_bed:
+        alias: "Heading to sleep"
+        sequence:
+          - service: switch.turn_off
+            entity_id: switch.attic_fan
+          - service: switch.turn_off
+            entity_id: switch.attic_tv
+          - service: light.turn_on
+            entity_id: group.noam_lights
+          - service: light.turn_on
+            entity_id: light.hall_basement
+          - service: switch.turn_on
+            entity_id: switch.noam_fan
+          - delay:
+                minutes: 2
+          - service: light.turn_off
+            entity_id: group.attic_lights
+  heading_out:
+        alias: "Heading outside"
+        sequence:
+          - service: switch.turn_off
+            entity_id: switch.attic_fan
+          - service: switch.turn_off
+            entity_id: switch.noam_fan
+          - service: switch.turn_off
+            entity_id: switch.attic_tv
+          - service: light.turn_off
+            entity_id: group.bedroom_lights
+          - delay:
+                seconds: 30
+          - service: light.turn_off
+            entity_id: group.attic_lights
+  attic_chillout:
+        alias: "Chillout"
+        sequence:
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_armchair
+                brightness: 255
+                xy_color:
+                - 0.137
+                - 0.065
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_couch
+                brightness: 255
+                xy_color:
+                - 0.527
+                - 0.447
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_entrance
+                brightness: 255
+                xy_color:
+                - 0.491
+                - 0.39
+          - service: light.turn_on
+            data:
+                entity_id: light.sofa_lightstrip
+                brightness: 255
+                effect: "Slowdown"
+  attic_movie:
+        alias: "Movie"
+        sequence:
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_armchair
+                brightness: 89
+                xy_color:
+                - 0.137
+                - 0.065
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_couch
+                brightness: 54
+                xy_color:
+                - 0.677
+                - 0.319
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_entrance
+                brightness: 255
+                xy_color:
+                - 0.677
+                - 0.319
+          - service: light.turn_on
+            data:
+                entity_id: light.sofa_lightstrip
+                brightness: 50
+                rgb_color: [255,0,0]
+                    
+  attic_study:
+        alias: "Study"
+        sequence:
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_armchair
+                brightness: 255
+                xy_color:
+                - 0.385
+                - 0.384
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_couch
+                brightness: 255
+                xy_color:
+                - 0.36
+                - 0.316
+          - service: light.turn_on
+            data:
+                entity_id: light.attic_entrance
+                brightness: 255
+                xy_color:
+                - 0.443
+                - 0.379
+          - service: light.turn_on
+            data:
+                entity_id: light.sofa_lightstrip
+                brightness: 255
+                effect: "Slowdown"
+  attic_lights_off:
+        alias: "Off"
+        sequence:
+          - service: light.turn_off
+            data:
+              entities:
+                - light.attic_armchair
+                - light.attic_couch
+                - light.attic_entrance
+                - light.sofa_lightstrip

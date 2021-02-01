@@ -1,0 +1,311 @@
+
+    default_view:
+        icon: mdi:home
+        entities:
+            - group.noam
+            - group.out
+            - group.living_room
+            - group.hall
+            - binary_sensor.updater
+            - group.speed_test
+            - device_tracker.noam_aybess_iphone_2
+            
+    noam:
+        name: Noam's Bedroom
+        icon: mdi:bed
+        entities:
+            - switch.noam_tv
+            - switch.noam_aircon
+            - switch.noam_heater
+            - group.noam_lights
+            - light.hall_basement
+            - switch.noam_fan
+            - group.noam_hdmi
+            - cover.noam_blinds
+            - group.power_sockets
+            - media_player.noam_s_bedroom_display
+            - input_boolean.warm_wakeup
+            
+    alarm:
+        name: Alarm Clock
+        icon: mdi:timer
+        entities:
+            - input_datetime.alarm_time
+            - input_boolean.alarm_enabled
+            
+    noam_view:
+        name: Noam's Bedroom
+        icon: mdi:bed
+        entities:
+            - switch.noam_tv
+            - switch.noam_aircon
+            - switch.noam_heater
+            - group.noam_lights
+            - light.hall_basement
+            - switch.noam_fan
+            - group.noam_hdmi
+            - cover.noam_blinds
+            - group.power_sockets
+            - group.alarm
+            - media_player.noam_s_bedroom_display
+            - input_boolean.warm_wakeup
+            - climate.noam_ac
+            
+            
+    noam_lights:
+        name: Bedroom Lights
+        entities:
+            - light.bed
+            - light.computer
+            - light.work_space
+            - light.bed_top_1
+            - light.bed_top_3
+            - light.bed_top_4
+            - light.work_top_1
+            - light.work_top_2
+            - light.work_top_3
+            - light.work_top_4
+            - light.bed_light_strip
+    noam_ceiling:
+        name: Ceiling Lights
+        entities:
+            - light.bed_top_1
+            - light.bed_top_3
+            - light.bed_top_4
+            - light.work_top_1
+            - light.work_top_2
+            - light.work_top_3
+            - light.work_top_4
+            
+    noam_color:
+        name: Color Lights
+        entities:
+            - light.work_space
+            - light.bed
+            - light.computer
+    noam_hdmi:
+        name: HDMI Switch
+        entities:
+            - switch.noam_hdmi1
+            - switch.noam_hdmi2
+            - switch.noam_hdmi3
+    noam_a1:
+        name: A1 Sensors
+        icon: mdi:leak
+        entities:
+            - sensor.noam_a1_noise
+            - sensor.noam_a1_air_quality
+            - sensor.noam_a1_light
+            - sensor.noam_a1_temperature
+            - sensor.noam_a1_humidity
+            
+    out_view:
+        name: Outdoor
+        icon: mdi:pine-tree
+        entities:
+            - light.out_grdn1
+            - light.out_grdn2
+            - light.out_grdn3
+            - light.out_grdn4
+            - light.out_entrance
+            - light.out_balcony
+    out:
+        name: Outdoor
+        icon: mdi:pine-tree
+        entities:
+            - light.out_grdn1
+            - light.out_grdn2
+            - light.out_grdn3
+            - light.out_grdn4
+            - light.out_entrance
+            - light.out_balcony
+    living:
+        name: Living Room
+        icon: mdi:television
+        entities:
+            - light.lr_living1
+            - light.lr_living2
+            - cover.lr_blinds
+    living_view:
+        name: Living Room
+        icon: mdi:television
+        entities:
+            - light.lr_living1
+            - light.lr_living2
+            - cover.lr_blinds
+    hall:
+        name: Halls
+        icon: mdi:floor-plan
+        entities:
+            - light.hall_basement
+            - light.hall_aqua
+            - switch.switcher_aybes
+            - script.shower_time
+            - timer.boiler
+            - vacuum.roomba
+            
+    hall_view:
+        name: Halls
+        icon: mdi:floor-plan
+        entities:
+            - light.hall_basement
+            - light.hall_aqua
+            - switch.switcher_aybes
+            - script.shower_time
+            - timer.boiler
+            - group.brother_printer
+            - vacuum.roomba
+    attic:
+        name: Attic
+        icon: mdi:sofa
+        entities:
+            - switch.attic_aircon
+            - switch.attic_heater
+            - switch.attic_fan
+            - input_boolean.attic_climate
+            - switch.attic_tv
+            - switch.attic_tv_volume
+            - switch.attic_tv_mute
+            - switch.attic_tv_av
+            - group.noam_a1
+            - media_player.attic_speaker
+            - media_player.noam_s_mibox
+            - group.attic_lights
+            - input_select.attic_scenes
+            - group.attic_humidifier
+    
+    attic_view:
+        name: Attic
+        icon: mdi:sofa
+        entities:
+            - switch.attic_aircon
+            - switch.attic_heater
+            - switch.attic_fan
+            - input_boolean.attic_climate
+            - switch.attic_tv
+            - switch.attic_tv_volume
+            - switch.attic_tv_mute
+            - switch.attic_tv_av
+            - group.noam_a1
+            - media_player.attic_speaker
+            - media_player.noam_s_mibox
+            - group.attic_lights
+            - input_select.attic_scenes
+            - group.attic_humidifier
+    
+    attic_lights:
+        name: Attic Lights
+        icon: mdi:light
+        entities:
+             - light.attic_entrance
+             - light.attic_armchair
+             - light.attic_couch
+             - light.attic_bed_top
+             - light.attic_bed_window
+             - light.sofa_lightstrip
+    attic_humidifier:
+        name: Humidifier
+        icon: mdi:air-humidifier
+        entities:
+             - switch.attic_humidifier_power
+             - switch.attic_humidifier_level
+             - switch.attic_humidifier_color
+             - switch.attic_humidifier_light
+            
+    power_sockets:
+        name: Power Sockets
+        icon: mdi:flash
+        entities:
+            - switch.slot_1
+            - switch.slot_2
+            - switch.slot_3
+            - switch.lamp
+    
+            
+    dummy_switches:
+        name: Dummy Switches
+        entities:
+            - switch.out_grdn1
+            - switch.out_grdn2
+            - switch.out_grdn3
+            - switch.out_grdn4
+            - switch.out_entrance
+            - switch.out_balcony
+            - switch.hall_basement
+            - switch.hall_aqua
+            - switch.noam_bar
+            - switch.lr_living1
+            - switch.lr_living2
+            - switch.noam_blinds_down
+            - switch.noam_blinds_up
+            - switch.lr_cover
+    study:
+        name: Study
+        entities:
+            - switch.study_aircon
+            - switch.study_fan
+            - switch.study_heater
+    
+    study_view:
+        name: Study
+        icon: mdi:desk
+        entities:
+            - switch.study_aircon
+            - switch.study_fan
+            - switch.study_heater
+    speed_test:
+        name: Speed Test
+        icon: mdi:speedometer
+        entities:
+            - sensor.speedtest_download
+            - sensor.speedtest_upload
+            - sensor.speedtest_ping
+    
+    attic_aircons:
+        name: Air Cons
+        entities:
+            - switch.attic_aircon
+    #        - switch.guest_aircon
+            
+    attic_fans:
+        name: Fans
+        entities:
+            - switch.attic_fan
+    #        - switch.guest_fan
+    server_status:
+        name: Server Status
+        entities:
+            - sensor.glances_swap_used
+            - sensor.glances_containers_active
+            - sensor.glances_ram_used
+            - sensor.glances_containers_ram_used
+            - sensor.glances_disk_used
+            - sensor.glances_containers_cpu_used
+            - sensor.glances_ram_used_percent
+            - sensor.glances_disk_used_percent
+            - sensor.glances_cpu_load
+            - sensor.glances_swap_used_percent
+            - sensor.glances_running
+            - sensor.glances_cpu_used
+            - sensor.glances_swap_free
+            - sensor.glances_total
+            - sensor.glances_cpu_temp
+            - sensor.glances_ram_free
+            - sensor.glances_thread
+            - sensor.glances_sleeping
+            - sensor.glances_disk_free
+    brother_printer:
+        name: Brother Printer
+        entities:
+            - sensor.mfc_9330cdw_b_w_counter
+            - sensor.mfc_9330cdw_belt_unit_remaining_life
+            - sensor.mfc_9330cdw_black_toner_remaining
+            - sensor.mfc_9330cdw_color_counter
+            - sensor.mfc_9330cdw_cyan_toner_remaining
+            - sensor.mfc_9330cdw_fuser_remaining_life
+            - sensor.mfc_9330cdw_magenta_toner_remaining
+            - sensor.mfc_9330cdw_page_counter
+            - sensor.mfc_9330cdw_pf_kit_1_remaining_life
+            - sensor.mfc_9330cdw_status
+            - sensor.mfc_9330cdw_uptime
+            - sensor.mfc_9330cdw_yellow_toner_remaining

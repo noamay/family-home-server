@@ -1,0 +1,28 @@
+### Notify when boiler has started ###
+- alias: Auto turn ON boiler - timer
+  trigger:
+    platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.boiler
+  action:
+  - service: switch.turn_on
+    entity_id: switch.switcher_aybes
+  - service: notify.mobile_app_noam_aybess_iphone
+    data:
+      message: Boiler was turned ON for 45 minutes
+  id: 42619e72a64740e5a240e3f5e3729d57
+### Turn off boiler when timer finished ###
+- alias: Auto turn off boiler - timer
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.boiler
+  action:
+  - service: switch.turn_off
+    entity_id: switch.switcher_aybes
+  - service: notify.mobile_app_noam_aybess_iphone
+    data:
+      message: Boiler was turned OFF after 45 minutes
+  id: a4f2564b11b34eaeb3451a1b00e42bff

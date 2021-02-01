@@ -1,0 +1,63 @@
+- alias: Set Basement Light Boolean
+  initial_state: true
+  trigger:
+    platform: mqtt
+    topic: zigbee2mqtt/0x00158d00047bb30c
+  action:
+    service_template: "{% if states('sensor.0x00158d00047bb30c_illuminance')|int >\
+      \ 300 %} \n    input_boolean.turn_on\n{%-elif states('sensor.0x00158d00047bb30c_illuminance')|int\
+      \ < 300 %} \n    input_boolean.turn_off\n{%-else %} \n    none\n{% endif %}\n"
+    entity_id: input_boolean.basement_light
+  id: d1dbdb0f199841fda64b4388ebce6b2f
+- alias: Turn on basement light on bedroom door open
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x00158d0001c02ff2_contact
+    to: 'on'
+  condition:
+    condition: template
+    value_template: '{{ is_state(''input_boolean.basement_light'',''off'') }}'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.hall_basement
+  id: e9e6ce6c1d424cf3801e65f9397d19a7
+- alias: Turn on basement light on occupancy sensor
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x00158d00047bb30c_occupancy
+    to: 'on'
+  condition:
+    condition: template
+    value_template: '{{ states(''sensor.0x00158d00047bb30c_illuminance'')|int < 300
+      }}'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.hall_basement
+  id: 2af03dc237ba4e4d9dfd2ce1444efbb6
+- id: 60111595665d4adbb1652812d6dec9ad
+  alias: Hall Alarm
+  trigger:
+  - entity_id: binary_sensor.0x00158d00047bb30c_occupancy
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      entity_id: group.noam_color
+      rgb_color:
+      - 255
+      - 0
+      - 0
+    service: light.turn_on
+  - data:
+      message: Hall Alarm!
+    service: notify.ios_noam_aybess_iphone
+  - delay: 0:0:5
+  - data:
+      brightness: 255
+      entity_id: group.noam_color
+      kelvin: 6410
+    service: light.turn_on
+  initial_state: false
+  mode: single

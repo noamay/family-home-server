@@ -1,0 +1,181 @@
+  # Default Lights structure with validation
+  lightson:
+    alias: Lights On
+    sequence:
+      - alias: Ceiling lights on
+        service: light.turn_on
+        data:
+          entity_id: group.noam_ceiling
+          brightness: 255
+      - alias: Color lights on
+        service: light.turn_on
+        data:
+          entity_id: group.noam_color
+          brightness: 255
+          kelvin: 6410
+      - delay:
+          seconds: 10
+      - alias: Ceiling lights on again
+        service: light.turn_on
+        data:
+          entity_id: group.noam_ceiling
+          brightness: 255
+          
+      - alias: Color lights on again
+        service: light.turn_on
+        data:
+          entity_id: group.noam_color
+          brightness: 255
+          kelvin: 6410
+
+  morning:
+    alias: Morning Scene
+    sequence:
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [240, 140, 55]
+            brightness_pct: 20
+            
+            
+      - service: light.turn_on
+        data:
+            entity_id: light.noam_bar
+            
+      - delay:
+            minutes: 2
+                
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 20
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [243, 164, 95]
+            brightness_pct: 40
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 30
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [246, 186, 135]
+            brightness_pct: 60
+            
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 40
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [249, 208, 175]
+            brightness_pct: 80
+
+            
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 50
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [252, 230, 215]
+            brightness_pct: 100
+
+      - delay:
+            minutes: 1
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_ceiling
+            brightness_pct: 60
+            
+      - service: light.turn_on
+        data:
+            entity_id: group.noam_color
+            brightness: 255
+            rgb_color: [255, 255, 255]
+
+      - delay:
+            minutes: 4
+      - service: script.turn_on
+        entity_id: script.lightson
+        
+      - service: cover.open_cover
+        entity_id: cover.noam_blinds
+        
+      - service: tts.google_say
+        entity_id: media_player.noams_bedroom_speaker
+        data:
+            message: 'Get up you fat fuck!'
+      - delay:
+            minutes: 10
+      - service: tts.google_say
+        entity_id: media_player.noams_bedroom_speaker
+        data:
+            message: 'It has been 20 minutes since your alarm went off, get the fuck up!'
+        
+  lightsoff:
+    alias: Lights Off
+    sequence:
+      - service: light.turn_off
+        entity_id: group.noam_ceiling
+      - service: light.turn_off
+        entity_id: group.noam_color
+      - service: light.turn_off
+        entity_id: light.noam_bar
+      - delay:
+            seconds: 2
+      - service: light.turn_off
+        entity_id: group.noam_ceiling
+      - service: light.turn_off
+        entity_id: group.noam_color
+
+  dream:
+        alias: "Day Dream Mode"
+        sequence:
+          - service: script.turn_on
+            entity_id: script.lightsoff
+            
+          - delay:
+                seconds: 10
+            
+          - service: light.turn_on
+            data:
+                entity_id: group.noam_color
+                brightness_pct: 100
+                effect: colorloop
+                
+          - service: light.turn_on
+            entity_id: light.noam_bar
+            
+  leave_bedroom:
+        alias: "Leaving Noam's Bedroom"
+        sequence:
+          - service: script.turn_on
+            entity_id: script.dream
+          - service: switch.turn_off
+            entity_id: switch.noam_fan
+          - service: cover.close_cover
+            entity_id: cover.noam_blinds
+            
+            

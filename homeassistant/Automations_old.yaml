@@ -1,0 +1,209 @@
+  - alias: Alarm Clock
+    trigger:
+        platform: template
+        value_template: "{{ states('sensor.time') == (states.input_datetime.alarm_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+    condition:
+        condition: and
+        conditions:
+           - condition: state
+             entity_id: 'input_boolean.alarm_enabled'
+             state: 'on'
+    action:
+      - service: script.alarm_clock
+      
+  - alias: Attic Climate - Aircon ON
+    initial_state: true
+    trigger:
+        platform: numeric_state
+        entity_id: sensor.noam_a1_temperature
+        # At least one of the following required
+        above: 25
+    # If given, will trigger when condition has been for X time, can also use days and milliseconds.
+        for:
+            minutes: 5
+    condition:
+        - condition: state
+          entity_id: input_boolean.attic_air_conditioner
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.attic_fan
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.attic_climate
+          state: 'off'
+    action:
+         - service: switch.turn_on
+           entity_id: group.attic_aircons
+           
+  - alias: Attic Climate - Aircon OFF
+    initial_state: true
+    trigger:
+        platform: numeric_state
+        entity_id: sensor.noam_a1_temperature
+        # At least one of the following required
+        below: 24
+    # If given, will trigger when condition has been for X time, can also use days and milliseconds.
+        for:
+            minutes: 10
+    condition:
+        - condition: state
+          entity_id: input_boolean.attic_air_conditioner
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.attic_fan
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.attic_climate
+          state: 'off'
+    action:
+         - service: switch.turn_off
+           entity_id: group.attic_aircons
+         - service: automation.turn_off
+           entity_id:
+            - automation.attic_climate_climate_ac_controller
+            - automation.attic_climate_climate_fan_controller
+           
+  - alias: Attic Climate - ManFan_OFF
+    initial_state: false
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_fan
+          from: "on"
+          to: "off"
+    action:
+        - service: switch.turn_off
+          data:
+            entity_id: group.attic_aircons
+        - service: automation.turn_on
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+        - service: automation.turn_off
+          entity_id:
+            - automation.attic_climate_climate_ac_controller
+            - automation.attic_climate_climate_fan_controller
+           
+  - alias: Attic Climate - ManAC_OFF
+    initial_state: false
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_air_conditioner
+          from: "on"
+          to: "off"
+    action:
+        - service: switch.turn_off
+          data:
+            entity_id: group.attic_aircons
+        - service: automation.turn_on
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+  - alias: Attic Climate - ManAC_ON
+    initial_state: true
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_air_conditioner
+          from: "off"
+          to: "on"
+    action:
+        - service: automation.turn_on
+          entity_id: automation.attic_climate_ManAC_OFF
+        - service: switch.turn_on
+          entity_id: group.attic_aircons
+        - service: automation.turn_off
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+            - automation.attic_climate_ManFan_OFF
+            - automation.attic_climate_climate_control_off
+        - service: input_boolean.turn_off
+          entity_id:
+            - input_boolean.attic_fan
+            - input_boolean.attic_climate
+            
+  - alias: Attic Climate - ManFan_ON
+    initial_state: true
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_fan
+          from: "off"
+          to: "on"
+    action:
+        - service: automation.turn_on
+          entity_id: automation.attic_climate_manfan_off
+        - service: switch.turn_on
+          entity_id: group.attic_fans
+        - service: automation.turn_off
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+            - automation.attic_climate_ManAC_OFF
+        - service: input_boolean.turn_off
+          entity_id: 
+            - input_boolean.attic_air_conditioner
+            - input_boolean.attic_climate
+            
+  - alias: Attic Climate - Climate Control ON
+    initial_state: true
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_climate
+          from: "off"
+          to: "on"
+    action:
+        - service: automation.turn_on
+          entity_id:
+            - automation.attic_climate_Climate_Control_OFF
+            - automation.attic_climate_AC_controler
+            - automation.attic_climate_Fan_controler
+        - service: automation.turn_off
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+            - automation.attic_climate_ManFan_OFF
+        - service: input_boolean.turn_off
+          entity_id:
+            - input_boolean.attic_fan
+            - input_boolean.attic_climate
+            
+  - alias: Attic Climate - Climate Control OFF
+    initial_state: false
+    trigger:
+        - platform: state
+          entity_id: input_boolean.attic_climate
+          from: "on"
+          to: "off"
+    action:
+        - service: switch.turn_off
+          entity_id: group.attic_aircons
+        - service: automation.turn_on
+          entity_id: 
+            - automation.attic_climate_aircon_on
+            - automation.attic_climate_aircon_off
+        - service: automation.turn_off
+          entity_id:
+            - automation.attic_climate_climate_ac_controller
+            - automation.attic_climate_climate_fan_controller
+        - service: input_boolean.turn_off
+          entity_id: 
+             - input_boolean.attic_air_conditioner
+             - input_boolean.attic_climate
+            
+  - alias: Attic Climate - Climate AC Controller
+    initial_state: false
+    trigger:
+        platform: time_pattern
+        minutes: "5"
+    action:
+        - service: switch.turn_on
+          entity_id: group.attic_aircons
+          
+  - alias: Attic Climate - Climate Fan Controller
+    initial_state: false
+    trigger:
+        platform: time_pattern
+        minutes: "35"
+    action:
+        - service: switch.turn_on
+          entity_id: group.attic_fans
+          

@@ -1,0 +1,187 @@
+#################### Attic Automations ########################
+####### Climate Control ########
+# In short - this automation is to keep the climate at the attic from running too hot during the day
+# If it gets above 32°C for longer than 5 minutes - the air conditioner turns on to reduce the heat
+# When the temperature is back below 30° for 10 minutes it turns back off.
+# The boolean "Attic Climate" is responsible for turning this feature on and off.
+#
+#### Too hot - turn on ####
+- alias: Attic Climate - Aircon ON
+  initial_state: true
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.noam_a1_temperature
+    above: 32
+    for:
+      minutes: 5
+  condition:
+  - condition: state
+    entity_id: input_boolean.attic_climate
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.attic_aircon
+  id: 0c6c85f3b2cf490e968836dd3acbf0b4
+#### Temperature normal - turn back off ####
+- alias: Attic Climate - Aircon OFF
+  initial_state: true
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.noam_a1_temperature
+    below: 30
+    for:
+      minutes: 10
+  condition:
+  - condition: state
+    entity_id: input_boolean.attic_climate
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.attic_aircon
+  id: 4708ef6726d4450f9b5080b4745c7037
+#### When the feature turns on - Immediately turn the air conditioner on ####
+- alias: Attic Climate - Climate Control ON
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_boolean.attic_climate
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.attic_aircon
+  id: bcef17c79c3d4edfb0c3fdd6bfaafaed
+#### When the feature turns on - Immediately turn the air conditioner off ####
+- alias: Attic Climate - Climate Control OFF
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_boolean.attic_climate
+    from: 'on'
+    to: 'off'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.attic_aircon
+  id: bfb29a3f23b549bfb3be41c6070562e7
+####### Tradfri Remote Control to control the attic scenes ########
+# This automation group is here to use the right and left arrows to change scenes in the attic.
+# The power button is natively integrated on the zigbee2mqtt container to the light bulbs
+# Added automation is to sync the yeelight lightstrip with this button.
+# https://www.ikea.com/gb/en/p/tradfri-remote-control-30443124/
+#
+### Right Arrow Automation ###
+- alias: IKEA arrow right
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: sensor.attic_smart_button
+    to: arrow_right_click
+  action:
+  - service: input_select.select_next
+    entity_id: input_select.attic_scenes
+  id: b4b3ee601d3a44f18a606f827c1bd63a
+### Left Arrow Automation ###
+- alias: IKEA arrow left
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: sensor.attic_smart_button
+    to: arrow_left_click
+  action:
+  - service: input_select.select_previous
+    entity_id: input_select.attic_scenes
+  id: ca8bfde12cb742ff8fdcf6f00d19c367
+### This automation is in charge of actually changing the scenes when the list is changed ###
+- alias: Attic Scene Choose
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_select.attic_scenes
+  action:
+  - service_template: "{% if is_state('input_select.attic_scenes','Study') %} \n \
+      \   script.attic_study\n{%-elif is_state('input_select.attic_scenes','Movie')\
+      \ %} \n    script.attic_movie\n{%-elif is_state('input_select.attic_scenes','Chillout')\
+      \ %}\n    script.attic_chillout\n{%-elif is_state('input_select.attic_scenes','Lights Off')\
+      \ %}\n    script.attic_lights_off\n{%-else %} \n    none\n{% endif %}\n"
+  id: eb7d68641f254885aa2e41ee7f33c636
+### This automation is in charge of adding the Yeelight lightstrip to the zigbee group toggle button on the remote. ###
+- id: '1593780055718'
+  alias: Attic Lightstrip Toggle
+  description: ''
+  trigger:
+  - device_id: d1926f05d4e94850910e54890462cede
+    discovery_id: 0x000d6ffffe0b5d26 action_toggle
+    domain: mqtt
+    platform: device
+    subtype: toggle
+    type: action
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.sofa_lightstrip
+    service: light.toggle
+  
+####### Plex WebHook #######
+# This automation group is in charge of setting the mood when watching plex in the attic.
+# 
+### This automation is in charge of transforming the plex webhook to MQTT publish
+- alias: Plex - Webhook - to MQTT
+  trigger:
+    platform: webhook
+    webhook_id: 5h8QOFcede
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: plex/update
+      payload_template: '{{ (trigger.data | string)[154:][:-55] | replace ("\\\\",
+        "\\") | replace ("\\\''", "''") | replace ("\\x","?") }}
+
+        '
+  id: 0f742dc519d146809878de98c30776a9
+#### This automation investigates the data and if the movie is being started at the attic Mi Box streamer - it will enable a boolean.
+- alias: Plex - Webhook - Toggle Plex Boolean
+  trigger:
+    platform: mqtt
+    topic: plex/update
+  condition:
+    condition: and
+    conditions:
+    - condition: template
+      value_template: '{{trigger.payload_json.Account[''title''] == ''noamay'' }}'
+    - condition: template
+      value_template: '{{trigger.payload_json.Player.title == ''MiBox S''}}'
+    - condition: template
+      value_template: '{{trigger.payload_json.event != ''media.scrobble''}}'
+    - condition: template
+      value_template: '{{trigger.payload_json.event != ''media.rate''}}'
+  action:
+    service_template: "{% if ((trigger.payload_json.event == 'media.play') or (trigger.payload_json.event\
+      \ == 'media.resume')) %}\n  input_boolean.turn_on\n{% elif ((trigger.payload_json.event\
+      \ == 'media.pause') or (trigger.payload_json.event == 'media.stop')) %}\n  input_boolean.turn_off\n\
+      {% endif %}\n"
+    entity_id: input_boolean.plex
+  id: 9d5d13f9073b4f2084bc4595dfdc11ec
+#### If PLEX is playing in the attic - set the correct scene.
+- alias: PLEX - Set the mood
+  trigger:
+    platform: state
+    entity_id: input_boolean.plex
+    to: 'on'
+  action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.attic_scenes
+      option: Movie
+  id: 3fb9c2566974461cbef4650e782942df
+#### If PLEX stopped/paused - set the correct scene
+- alias: PLEX - Reset back to normal
+  trigger:
+    platform: state
+    entity_id: input_boolean.plex
+    to: 'off'
+  action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.attic_scenes
+      option: Chillout
+  id: cc02459d6f554e3b8667ca6571ec88a3

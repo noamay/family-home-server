@@ -1,0 +1,81 @@
+############# Telegram Automations ##############
+# The ideal solution is to move all notifications to the telegram bot
+#
+### Hello World - Telegram ###
+- id: '1588681098385'
+  alias: Telegram Ping Pong
+  description: Telegram Test
+  trigger:
+  - event_data:
+      command: /ping
+    event_type: telegram_command
+    platform: event
+  action:
+  - data_template:
+      target: '{{ trigger.event.data.chat_id }}'
+      message: Ok {{ trigger.event.data["from_first"] }}, boiling the kettle!
+    service: telegram_bot.send_message
+### Send an occasional Speed Test update if Noam isn't sleeping
+- id: '1593636402152'
+  alias: Speed Test Update
+  description: ''
+  trigger:
+  - entity_id: sensor.speedtest_download
+    platform: state
+  condition:
+  - condition: state
+    entity_id: input_boolean.noam_sleeping
+    state: 'false'
+  action:
+  - data:
+      message: "Download: {{ states('sensor.speedtest_download') }}Mb  Upload: {{\
+        \ states('sensor.speedtest_upload') }}Mb  Ping: {{ states('sensor.speedtest_ping')\
+        \ }}ms \n"
+      title: Speed Test
+    service: notify.aybeserver_telegram
+### Alert when bedroom door is opened ###
+- alias: Room Alarm
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x00158d0001c02ff2_contact
+    to: 'on'
+  action:
+  - service: notify.mobile_app_noam_aybess_iphone
+    data:
+      message: Bedroom Door was opened!
+  id: 1b9687a8883946fda612e5163c2fd788
+### Alert when there's an update available for HACS ###
+- alias: Create a notification when there is updates pending in HACS
+  trigger:
+    platform: state
+    entity_id: sensor.hacs
+  condition:
+  - condition: template
+    value_template: '{{ states(trigger.entity_id) != ''unknown''}}'
+  - condition: template
+    value_template: '{{ (states(trigger.entity_id) | float) != 0}}'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: Updates pending in HACS
+      message: "{% for repo in state_attr(trigger.entity_id, 'repositories') %}\n\
+        \  **{{ repo.display_name }}** _{{ repo[\"installed version\"] }}_ -> _{{\
+        \ repo[\"available version\"] }}_\n{% endfor %}"
+  id: 191c3843d91c419dbd1e9e1bf5938102
+### Alert when new repo is added to HACS ###
+- alias: Create a notification when somethig is added to HACS
+  trigger:
+    platform: event
+    event_type: hacs/repository
+    event_data:
+      action: registration
+  condition:
+    condition: template
+    value_template: '{{ trigger.event.data.repository is defined }}'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: New repository in HACS
+      message: '{% set repo = trigger.event.data.repository %} {% set id = trigger.event.data.repository_id
+        %} [{{ repo }}](/hacs/repository/{{ id }}) was just added to HACS.'
+  id: a59a6a38d95d4d028d297f6df8ef3534
