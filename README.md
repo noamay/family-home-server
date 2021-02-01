@@ -5,7 +5,7 @@ This is my smart home setup for home automation, media server and NAS.
 
 In my opinion - the best way to monitor my services is Docker-Compose.
 
-## Home Assistant
+## [Home Assistant](https://github.com/noamay/FamilyHomeServer/tree/master/homeassistant)
 
 My home automation heart is [Home Assistant](https://www.home-assistant.io/).
 Home assistant is an open source platform that combines a variety of smart home devices and features into a single platform.
