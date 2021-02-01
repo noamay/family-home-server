@@ -1,0 +1,64 @@
+
+      - platform: switch
+        name: out_grdn1
+        entity_id: switch.out_grdn1
+      - platform: switch
+        name: out_grdn2
+        entity_id: switch.out_grdn2
+      - platform: switch
+        name: out_grdn3
+        entity_id: switch.out_grdn3
+      - platform: switch
+        name: out_grdn4
+        entity_id: switch.out_grdn4
+      - platform: switch
+        name: out_entrance
+        entity_id: switch.out_entrance
+      - platform: switch
+        name: out_balcony
+        entity_id: switch.out_balcony
+#      - platform: switch
+#        name: hall_basement
+#        entity_id: switch.hall_basement
+      - platform: switch
+        name: lr_living1
+        entity_id: switch.lr_living1
+      - platform: switch
+        name: lr_living2
+        entity_id: switch.lr_living2
+      - platform: switch
+        name: hall_aqua
+        entity_id: switch.hall_aqua
+      - platform: switch
+        name: noam_bar
+        entity_id: switch.noam_bar
+      - platform: switch
+        name: bath_1
+        entity_id: switch.bed_bath_light1
+      - platform: switch
+        name: bath_2
+        entity_id: switch.bed_bath_light2
+      - platform: switch
+        name: Bed Light Strip
+        entity_id: switch.0x00158d0001dbeb2a_switch
+      - platform: template
+        lights:
+            hall_basement:
+                friendly_name: Basement
+                value_template: >-
+                    {% if is_state('input_boolean.basement_light', 'on') %}
+                        on
+                    {% else %}
+                        off
+                    {% endif %}
+                turn_on:
+                  - service: switch.turn_on
+                    entity_id: switch.hall_basement
+                  - service: input_boolean.turn_on
+                    entity_id: input_boolean.basement_light
+                turn_off:
+                  - service: switch.turn_off
+                    entity_id: switch.hall_basement
+                  - service: input_boolean.turn_off
+                    entity_id: input_boolean.basement_light
+            
