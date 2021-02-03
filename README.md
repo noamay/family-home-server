@@ -60,20 +60,6 @@ For example - I'd use a ZigBee/WiFi wall switches - but those require an extra n
 * Speed Test - Monitor my internet speed test.
 * Google Home - via Nabu Casa paid subscription(this isn't the only method, but it's the easiest method and you get a chance to support the home assistant community)
 ---
-## Usage
-
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
