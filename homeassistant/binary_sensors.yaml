@@ -1,3 +1,4 @@
+####### Reverses the contact sensors for the air conditioners(When the sensor is "ON" - The air conditioner is actually off)
   - platform: template
     sensors:
         noam_bedroom_ac:
@@ -9,6 +10,7 @@
         basement_light:
             value_template: "{{ states('sensor.0x00158d00047bb30c_illuminance')|int > 300 }}"
             
+####### Pings google to check for active internet connection
   - platform: ping
     host: 8.8.8.8
     count: 2

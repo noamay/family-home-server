@@ -27,7 +27,7 @@ switch: !include switches.yaml
 light: !include light.yaml
 cover: !include covers.yaml
 group: !include groups.yaml
-automation: !include automations.yaml
+automation: !include automations.yaml ####TODO - split the automations to multiple files.
 script: !include scripts.yaml
 cloud: !include cloud.yaml
 sensor: !include sensors.yaml
@@ -36,7 +36,7 @@ binary_sensor: !include binary_sensors.yaml
 ########### Integrations ########### 
 default_config:
 speedtestdotnet:
-    server_id: 5803
+    server_id: 5803 
 updater:
 config:
 switcher_kis:
@@ -126,8 +126,8 @@ mqtt:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
-  ssl_certificate: /config/certificate/fullchain.pem
-  ssl_key: /config/certificate/privkey.pem
+  ssl_certificate: !secret fullchain
+  ssl_key: !secret privkey
 # Discover some devices automatically
 discovery:
   ignore:
