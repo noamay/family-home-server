@@ -58,12 +58,6 @@ feedreader:
     
 smartir:
 
-zoneminder:
-  - host: !secret zm_host
-    ssl: true
-    verify_ssl: true
-    username: !secret zm_user
-    password: !secret zm_pass
     
 camera:
   - platform: zoneminder
