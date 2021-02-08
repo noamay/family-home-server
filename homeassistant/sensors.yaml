@@ -13,6 +13,11 @@
       - date
       - time
       
+  - platform: qbittorrent
+    url: !secret torrent_url
+    username: !secret torrent_user
+    password: !secret torrent_password
+
   - platform: mqtt
     name: "Red Alert"
     state_topic: "/redalert/"
