@@ -45,3 +45,4 @@ ozw_log.txt
 #custom_components/
 
 # End of https://www.toptal.com/developers/gitignore/api/homeassistant
+.DS_Store

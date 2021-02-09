@@ -66,5 +66,3 @@
     max_age:
       hours: 18
     name: Ping Stats
-  - platform: zoneminder
-    include_archived: false
