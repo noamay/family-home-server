@@ -1,2 +1,2 @@
 # Home Assitant
-Most of the info available [here](https://github.com/noamay/family-home-server)
+Information about my home assistant configuration is available [here](https://github.com/noamay/family-home-server)
